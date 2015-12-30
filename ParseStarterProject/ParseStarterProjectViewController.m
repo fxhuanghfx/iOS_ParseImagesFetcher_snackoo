@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2015-present, Parse, LLC.
+ * Copyright (c) 2014-present, Parse, LLC.
  * All rights reserved.
  *
  * This source code is licensed under the BSD-style license found in the
@@ -11,9 +11,8 @@
  *
  */
 
-#import "ParseStarterProjectViewController.h"
-
 #import <Parse/Parse.h>
+#import "ParseStarterProjectViewController.h"
 #import "ImageTableViewCell.h"
 
 #define nSectionCount 1

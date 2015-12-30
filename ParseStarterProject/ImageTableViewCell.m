@@ -2,7 +2,7 @@
 //  ImageTableViewCell.m
 //  ParseStarterProject
 //
-//  Created by Feixiang Huang on 12/1/15.
+//  Created by Feixiang Huang on 02/06/14.
 //
 //
 

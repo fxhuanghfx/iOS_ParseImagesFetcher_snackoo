@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2015-present, Parse, LLC.
+ * Copyright (c) 2014-present, Parse, LLC.
  * All rights reserved.
  *
  * This source code is licensed under the BSD-style license found in the
@@ -11,7 +11,7 @@
 #import <UIKit/UIKit.h>
 #import <CoreData/CoreData.h>
 
-
+//
 @class ParseStarterProjectViewController;
 
 @interface ParseStarterProjectAppDelegate : NSObject <UIApplicationDelegate>

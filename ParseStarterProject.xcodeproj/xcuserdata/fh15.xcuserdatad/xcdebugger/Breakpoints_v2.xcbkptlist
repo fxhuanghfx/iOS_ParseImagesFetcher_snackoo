@@ -47,7 +47,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "102"
             endingLineNumber = "102"
-            landmarkName = "-application:didRegisterForRemoteNotificationsWithDeviceToken:"
+            landmarkName = "-application:didFailToRegisterForRemoteNotificationsWithError:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -63,8 +63,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "125"
             endingLineNumber = "125"
-            landmarkName = "-application:didReceiveRemoteNotification:"
-            landmarkType = "5">
+            landmarkName = "@implementation ParseStarterProjectAppDelegate"
+            landmarkType = "3">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -79,8 +79,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "133"
             endingLineNumber = "133"
-            landmarkName = "-saveContext"
-            landmarkType = "5">
+            landmarkName = "@implementation ParseStarterProjectAppDelegate"
+            landmarkType = "3">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -94,9 +94,7 @@
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "447"
-            endingLineNumber = "447"
-            landmarkName = "-imageFilesUpload"
-            landmarkType = "5">
+            endingLineNumber = "447">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -111,7 +109,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "116"
             endingLineNumber = "116"
-            landmarkName = "-application:didFailToRegisterForRemoteNotificationsWithError:"
+            landmarkName = "-saveContext"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -127,8 +125,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "237"
             endingLineNumber = "237"
-            landmarkName = "-nameFileRetrieve"
-            landmarkType = "5">
+            landmarkName = "@implementation ParseStarterProjectViewController"
+            landmarkType = "3">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -143,8 +141,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "181"
             endingLineNumber = "181"
-            landmarkName = "@implementation ParseStarterProjectViewController"
-            landmarkType = "3">
+            landmarkName = "-imageFileSaveInLocal:fileName:"
+            landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -159,8 +157,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "222"
             endingLineNumber = "222"
-            landmarkName = "@implementation ParseStarterProjectViewController"
-            landmarkType = "3">
+            landmarkName = "-nameFileRetrieve"
+            landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -175,7 +173,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "227"
             endingLineNumber = "227"
-            landmarkName = "-nameFileRetrieve"
+            landmarkName = "-tableView:numberOfRowsInSection:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -207,7 +205,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "248"
             endingLineNumber = "248"
-            landmarkName = "-numberOfSectionsInTableView:"
+            landmarkName = "-tableView:cellForRowAtIndexPath:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -239,8 +237,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "278"
             endingLineNumber = "278"
-            landmarkName = "-tableView:cellForRowAtIndexPath:"
-            landmarkType = "5">
+            landmarkName = "@implementation ParseStarterProjectViewController"
+            landmarkType = "3">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -255,7 +253,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "283"
             endingLineNumber = "283"
-            landmarkName = "-tableView:cellForRowAtIndexPath:"
+            landmarkName = "-viewWillAppear:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -287,7 +285,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "244"
             endingLineNumber = "244"
-            landmarkName = "-nameFileRetrieve"
+            landmarkName = "-tableView:cellForRowAtIndexPath:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -303,7 +301,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "269"
             endingLineNumber = "269"
-            landmarkName = "-tableView:cellForRowAtIndexPath:"
+            landmarkName = "-viewDidLoad"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -335,7 +333,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "388"
             endingLineNumber = "388"
-            landmarkName = "-filesProcess"
+            landmarkName = "-imageFilesUpload"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -351,7 +349,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "375"
             endingLineNumber = "375"
-            landmarkName = "-filesProcess"
+            landmarkName = "-archiveFilesUpload"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -367,7 +365,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "355"
             endingLineNumber = "355"
-            landmarkName = "-filesProcess"
+            landmarkName = "-archiveFilesUpload"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -399,8 +397,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "197"
             endingLineNumber = "197"
-            landmarkName = "-imageFileSaveInLocal:fileName:"
-            landmarkType = "5">
+            landmarkName = "@implementation ParseStarterProjectViewController"
+            landmarkType = "3">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -479,7 +477,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "170"
             endingLineNumber = "170"
-            landmarkName = "-imageFileGetFromHardDrive:image:"
+            landmarkName = "-imageFileSaveInLocal:fileName:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -527,7 +525,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "211"
             endingLineNumber = "211"
-            landmarkName = "-getImageFloderPath"
+            landmarkName = "-nameFileRetrieve"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -543,7 +541,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "136"
             endingLineNumber = "136"
-            landmarkName = "-imageFileRetrieve:"
+            landmarkName = "-imageFileGetFromHardDrive:image:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>

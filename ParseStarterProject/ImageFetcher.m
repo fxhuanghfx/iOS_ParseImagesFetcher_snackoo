@@ -2,7 +2,7 @@
 //  ImageDownloader.m
 //  ParseStarterProject
 //
-//  Created by Feixiang Huang on 11/6/15.
+//  Created by Feixiang Huang on 02/06/14.
 //
 //
 
