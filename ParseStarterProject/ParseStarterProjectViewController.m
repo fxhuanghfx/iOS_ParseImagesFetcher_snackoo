@@ -5,19 +5,31 @@
  * This source code is licensed under the BSD-style license found in the
  * LICENSE file in the root directory of this source tree. An additional grant
  * of patent rights can be found in the PATENTS file in the same directory.
+ *
+ *Feixiang Huang
+ *
+ *
  */
 
 #import "ParseStarterProjectViewController.h"
 
 #import <Parse/Parse.h>
-#import "PhotoCell.h"
+#import "ImageTableViewCell.h"
 
 #define nSectionCount 1
 #define nPhotosInSection 100
 
 #define nPickedPhotos 5
 
+@interface ParseStarterProjectViewController ()
 
+
+- (BOOL) imageFileGetFromHardDrive:(NSString *)imageFileName
+                     image:(UIImage *)image;
+
+- (NSString *)getImageFloderPath;
+
+@end
 
 
 
@@ -26,226 +38,171 @@
 #pragma mark -
 #pragma mark UIViewController
 
-- (void) filesProcess{
-
-    NSString *path;
-    NSFileManager *fm;
-    NSDirectoryEnumerator *dirEnum;
-    
-    fm = [NSFileManager defaultManager];
-    
-    
-    path = @"/Users/fh15/Documents/100photoes/";
-    NSString *fileFullPath = path;
-    [fileFullPath stringByAppendingString:path];
-    //get files in the directory and its sub directory
-    dirEnum = [fm enumeratorAtPath:path];
-    
-    int i=0;
-    NSString *fileName = @"";
-    //NSLog(@"1.Contents of %@:",path);
-    _imageFileNameArray = [[NSMutableArray alloc] init];
-    _imageFileFullPathArray = [[NSMutableArray alloc] init];
-    
-    while ((fileName = [dirEnum nextObject]) != nil)
-    {
-        if(i!=0){
-            [_imageFileNameArray addObject:fileName];
-            //[_imageFileNameArray addObject:@"hfx"];
-            NSLog(@"%@",fileName);
-            fileFullPath = [fileFullPath stringByAppendingString:fileName];
-            [_imageFileFullPathArray addObject:fileFullPath];
-            NSLog(@"%@",fileFullPath);
-            fileFullPath = @"/Users/fh15/Documents/100photoes/";
-            //NSLog(@"%@",fileFullName);
-        }
-        i++;
-        NSLog(@"i = %i",i);
-    }
- 
-    
-    BOOL success1=[NSKeyedArchiver archiveRootObject:_imageFileNameArray toFile:_imageFileFullPathArchivePath];
-    if (success1) {
-        NSLog(@"_imageFileNameArray archive succeeded.");
-    }
-    BOOL success2=[NSKeyedArchiver archiveRootObject:_imageFileFullPathArray toFile:_imageFileNameArchivePath];
-    if (success2) {
-        NSLog(@"_imageFileFullPathArray archive succeeded.");
-    }
-    
-    
-}
-
-- (void) archiveFilesUpload{
-    
-    //load image the filename file
-    _homePath=NSHomeDirectory();
-    
-    _imageFileNameArchivePath=[_homePath stringByAppendingPathComponent:@"/imageFileName.archiver"];
-
-    //Archive file restore
-    _imageFileNameArray= [NSKeyedUnarchiver unarchiveObjectWithFile:_imageFileNameArchivePath];
-    
-    //NSData *data = [NSKeyedArchiver archivedDataWithRootObject:_imageFileNameArray];
-    NSString *fimeNameString = @"";
-    NSString *myString = @"";
-    for (myString in _imageFileNameArray ) {
-        if([myString isKindOfClass:[NSString class]]){
-            
-            fimeNameString = [fimeNameString stringByAppendingPathComponent:myString];
-        }
-    }
-    
-    //=====================
-    _imageUploadApplication = [PFObject objectWithClassName:@"archiverPickerClass"];
-    _imageUploadApplication[@"fileName"] = @"imageFileName.archiver";
-    
-    NSData *data = [fimeNameString dataUsingEncoding:NSUTF8StringEncoding];
-    PFFile *file = [PFFile fileWithName:@"imageFileName.archiver" data:data];
-    
-    //////////////////////////////// 太重要了！！！！！！！
-    [file save];//
-    
-    _imageUploadApplication[@"File"] = file;
-    
-    // 下面2个函数功能一样，只不过save是阻塞式的，saveInBackground开了另外一个线程，所以调试时应该放开断点让它继续运行，过一段时间才会有结果。
-    [_imageUploadApplication save];
-    
-    
-}
 
 
-- (void) imageFilesUpload{
-    //load image the filename file
-    _homePath=NSHomeDirectory();
-    _imageFileFullPathArchivePath=[_homePath stringByAppendingPathComponent:@"/imageFileFullPath.archiver"];
-    _imageFileNameArchivePath=[_homePath stringByAppendingPathComponent:@"/imageFileName.archiver"];
-    
-    //Archive file restore
-    _imageFileFullPathArray= [NSKeyedUnarchiver unarchiveObjectWithFile:_imageFileFullPathArchivePath];
-    _imageFileNameArray= [NSKeyedUnarchiver unarchiveObjectWithFile:_imageFileNameArchivePath];
-    
-    NSString *fileNameString = @"";
-    NSString *fileFullPathString = @"";
-    
-    for ( int i=0; i<[_imageFileNameArray count]; i++ ) {
-        
-        _imageUploadApplication = [PFObject objectWithClassName:@"imagePickerClass"];
-        
-        //=====================
-        if (i >=0 && i< 100) {
-            fileNameString = [_imageFileNameArray objectAtIndex:i];
-            fileFullPathString = [_imageFileFullPathArray objectAtIndex:i];
-        }
-        
-        //load image files
-        UIImage* image = [UIImage imageNamed:fileFullPathString];
-        
-        NSData* imageData = UIImageJPEGRepresentation(image, 0.2);
-        PFFile *imageFile = [PFFile fileWithName:fileNameString data:imageData];
-        
-        //////////////////////////////// 太重要了！！！！！！！
-        [imageFile save];//
-        //[imageFile saveInBackground];//
-        
-        //PFObject *userPhoto = [PFObject objectWithClassName:@"UserPhoto"];
-        
-        _imageUploadApplication[@"fileNo"] = @(i);
-        _imageUploadApplication[@"fileName"] = fileNameString;
-        _imageUploadApplication[@"File"] = imageFile;
-        
-        // 下面2个函数功能一样，只不过save是阻塞式的，saveInBackground开了另外一个线程，所以调试时应该放开断点让它继续运行，过一段时间才会有结果。
-        [_imageUploadApplication save];
-        //[_imageUploadApplication saveInBackground];
-        
-    }
-    NSLog(@"imageFilesUpload succeed.");
-}
+
+
 
 
 - (void) imageFileRetrieve: (int) iNum{
-
-    if(iNum > 75){
-        NSLog(@"ok");
-    }
+    
     //Query
     PFQuery *query;
-    
     int iNumber = iNum;
+    BOOL isGetImage = true;
+    NSString *strImageFileName = @"";
 
-    
     query = [PFQuery queryWithClassName:@"imagePickerClass"];
-
-
-   
     NSMutableArray *names = [NSMutableArray arrayWithCapacity:nPickedPhotos];
 
-    for (int j=0; j<nPickedPhotos; j++) {
-        iNumber += j;
-        if (iNumber >=0 && iNumber < 100) {
-            [names addObject:[_imageFileNamesResultArray objectAtIndex:iNumber]];
-        }
+    int j=0;
+    for (j=0; j<nPickedPhotos; j++) {
         
-    }
-    [query whereKey:@"fileName" containedIn:names];
-
-    
-    [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
-        
-    //block 做函数参数的时候，调试时也应该放开断点让它继续运行，过一段时间才会有结果。只在block里设一个断点，其他断点全部取消
-    if (!error) {
-        
-        
-        PFFile *file;
-        NSString *fileName;
-        int iPathRow;
-
-        for (PFObject *object in objects) {
+        if ((iNumber+j) >=0 && (iNumber+j) < 100) {
+            //
+            strImageFileName = [_imageFileNamesResultArray objectAtIndex:(iNumber+j)];
             
-            self.fileRetrieveApplication = object;
-            file = self.fileRetrieveApplication[@"File"];
-            fileName = self.fileRetrieveApplication[@"fileName"];
+            //
+            UIImage* image = [self.imageFetcher getImageFromRAM:strImageFileName];
             
-            iPathRow = [[self.fileRetrieveApplication objectForKey:@"highScore"] intValue];
-            
-            NSLog(@"fileNo is %d", iPathRow);
-            NSLog(@"fileName is %@", fileName);
-           
-            [file getDataInBackgroundWithBlock:^(NSData *imageData, NSError *error) {
-                if (!error) {
-                    UIImage *image = [UIImage imageWithData:imageData];
-                    
-                    [self.imageFetcher storeImageWithImage:image
-                                       storeImageWithName: fileName ];
-                    
-                    dispatch_async(dispatch_get_main_queue(), ^{
-                        [self.photoTableView reloadData];
-
-                    });
-                    
-                    
+            if (image == nil) {
+                //search image file from hard drive
+                BOOL isGetImageFromLocal = [self imageFileGetFromHardDrive:strImageFileName
+                                  image:image];
+                
+                if (isGetImageFromLocal == false) {
+                    //image file does not exist in hard drive
+                    [names addObject:strImageFileName];
+                    isGetImage = false;
                 }
-            }];
+                
+            }
+            
+            //
+            
         }
-    } else {
-        // Log details of the failure
-        NSLog(@"Error: %@ %@", error, [error userInfo]);
+        
     }
-}];
+    self.iImageNum = (iNumber+j);
     
-    
+    //image file does not exist in hard drive
+    if (isGetImage == false) {
+
+        [query whereKey:@"fileName" containedIn:names];
+        [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
+            
+             if (!error) {
+        
+                PFFile *file;
+                NSString *fileName;
+                int iPathRow;
+
+                for (PFObject *object in objects) {
+                    
+                    self.fileRetrieveApplication = object;
+                    file = self.fileRetrieveApplication[@"File"];
+                    fileName = self.fileRetrieveApplication[@"fileName"];
+                    iPathRow = [[self.fileRetrieveApplication objectForKey:@"fileNo"] intValue];
+                    
+                    NSLog(@"fileNo is %d", iPathRow);
+                    NSLog(@"fileName is %@", fileName);
+                   
+                    [file getDataInBackgroundWithBlock:^(NSData *imageData, NSError *error) {
+                        if (!error) {
+                            UIImage *image = [UIImage imageWithData:imageData];
+                            NSLog(@"%@", [NSValue valueWithCGSize:image.size]);
+                            
+                            [self.imageFetcher storeImageInRAM:image
+                                               storeImageWithName: fileName ];
+                            
+                            [self imageFileSaveInLocal:imageData
+                                              fileName:fileName];
+                            //
+                            dispatch_async(dispatch_get_main_queue(), ^{
+                                [self.photoTableView reloadData];
+                            });
+
+                        }
+                    }];
+                }
+            } else {
+                // Log details of the failure
+                NSLog(@"Error: %@ %@", error, [error userInfo]);
+            }
+        }];
+    }//if image file does not exist in hard drive
     
     
 }
+
+- (BOOL) imageFileGetFromHardDrive:(NSString *)imageFileName
+                     image:(UIImage *)image{
+   
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    NSString *dirPath = [self getImageFloderPath];
+    NSString *imageFileFullPath = [NSString stringWithFormat:@"%@/%@", dirPath, imageFileName];
+    
+    if(![fileManager fileExistsAtPath:imageFileFullPath]){
+        //if the file does not exist
+        return false;
+    }
+    else{
+    
+        NSData * imageData = [[NSData alloc] initWithContentsOfFile:imageFileFullPath];
+        //
+        image = [UIImage imageWithData:imageData];
+
+        [self.imageFetcher storeImageInRAM:image
+                            storeImageWithName:imageFileName ];
+        
+        return true;
+    }
+    
+}
+
+
+
+- (void) imageFileSaveInLocal:(NSData *)imageData
+                     fileName:(NSString *)imageFileName{
+
+    NSString *dirPath = [self getImageFloderPath];
+    BOOL isDir = NO;
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    BOOL existed = [fileManager fileExistsAtPath:dirPath isDirectory:&isDir];
+    if (existed != YES)
+    {
+        [fileManager createDirectoryAtPath:dirPath
+               withIntermediateDirectories:YES
+                                attributes:nil
+                                     error:nil];
+    }
+    
+    NSString *imageFileFullPath = [NSString stringWithFormat:@"%@/%@", dirPath, imageFileName];
+    if(![fileManager fileExistsAtPath:imageFileFullPath])
+    {
+        //if the file does not exist
+        [fileManager createFileAtPath:imageFileFullPath
+                             contents:imageData
+                           attributes:nil];
+    }
+ 
+}
+
+- (NSString *)getImageFloderPath{
+    NSString * dirName = @"ImageFiles";
+    //NSCachesDirectory
+    NSString *dirPath = [NSString stringWithFormat:@"%@/%@", NSHomeDirectory(), dirName];
+
+    return dirPath;
+}
+
 
 //////////////////////
 - (void) nameFileRetrieve{
 
     //Query
     PFQuery *query = [PFQuery queryWithClassName:@"archiverPickerClass"];
-    
     [query whereKey:@"fileName" equalTo:@"imageFileName.archiver"];
-    
     NSArray* fileObjects = [query findObjects];
     for (PFObject *myObject in fileObjects) {
         
@@ -273,7 +230,8 @@
     return nPhotosInSection;
 }
 
-- (NSString *) tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section{
+- (NSString *) tableView:(UITableView *)tableView
+ titleForHeaderInSection:(NSInteger)section{
     return @"My favorite photos";
 
 }
@@ -284,21 +242,20 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView
          cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     
-    
-    UITableViewCell * cell = [tableView dequeueReusableCellWithIdentifier:@"photoCell" forIndexPath:indexPath];
-
+    ImageTableViewCell * cell = [tableView dequeueReusableCellWithIdentifier:@"photoCell"
+                                                             forIndexPath:indexPath];
     NSString * imageFileName = self.imageFileNamesResultArray[indexPath.row];
     NSLog(@"indexPath.row is %li", (long)indexPath.row);
-    self.iIndexPathRow = indexPath.row;
     
+    int iIndex = 0;
+    iIndex = (int)indexPath.row;
+    self.iIndexPathRow = iIndex;
+
     UIImage *photoImage;
-    
-    photoImage = (UIImage*)[self.imageFetcher getImageForName:imageFileName ];
-    
+    photoImage = (UIImage*)[self.imageFetcher getImageFromRAM:imageFileName ];
     if (photoImage != nil) {
         dispatch_async(dispatch_get_main_queue(), ^{
-            cell.imageView.image = photoImage;
-            
+        cell.imageViewParse.image = photoImage;
         });
     }
     
@@ -306,62 +263,165 @@
 }
 
 
-
-
-
-
-// Implement viewDidLoad to do additional setup after loading the view, typically from a nib.
-- (void)viewWillAppear:(BOOL)animated{
-    
-    _imageFetcher = [ImageFetcher getSharedInstance];
-
-    
-}
-
-- (void) viewDidAppear:(BOOL)animated{
-    [super viewDidAppear:animated];
-    
-    NSLog(@"viewDidAppear");
-
-}
-
-- (void)scrollViewDidScroll:(UIScrollView *)scrollView{
-    
-    self.iStart = 0;
-    self.iEnd = 0;
-    self.iClickCount++;
-    
-    int iIndex = self.iIndexPathRow; //(int)scrollView.contentOffset.y / iWidthImage;
-    NSLog(@"iIndex is %i", iIndex);
-    if(iIndex > 75){
-        NSLog(@"ok");
-    }
-    
-    
-    if ( iIndex>0 && (iIndex-self.iStart)>0 && iIndex < nPhotosInSection) {
-        
-        
-        [self imageFileRetrieve: iIndex];
-        
-        self.iStart = iIndex;
-    }
-    
-    NSLog(@"------- %f, %i",scrollView.contentOffset.y, iIndex);
-}
-
-
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    
     UIScrollView * scrollView = (UIScrollView*)self.photoTableView;
     scrollView.delegate = self;
+    
+    _imageFetcher = [ImageFetcher getSharedInstance];
     
     [self nameFileRetrieve];
     [self imageFileRetrieve:0];
     
     NSLog(@"viewDidLoad succeed.");
 }
+
+
+
+// Implement viewDidLoad to do additional setup after loading the view, typically from a nib.
+- (void)viewWillAppear:(BOOL)animated{
+   
+}
+
+- (void) viewDidAppear:(BOOL)animated{
+    [super viewDidAppear:animated];
+}
+
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView{
+    
+    int iIndex = self.iImageNum;
+    
+    [self imageFileRetrieve: iIndex];
+
+}
+
+
+- (void) filesProcess{
+    
+    NSString *path;
+    NSFileManager *fm;
+    NSDirectoryEnumerator *dirEnum;
+    
+    _homePath=NSHomeDirectory();
+    _imageFileFullPathArchivePath=[_homePath stringByAppendingPathComponent:@"/imageFileFullPath.archiver"];
+    _imageFileNameArchivePath=[_homePath stringByAppendingPathComponent:@"/imageFileName.archiver"];
+    
+    
+    fm = [NSFileManager defaultManager];
+    path = @"/Users/fh15/Documents/100photoes/";
+    NSString *fileFullPath = path;
+    [fileFullPath stringByAppendingString:path];
+    
+    //get files in the directory and its sub directory
+    dirEnum = [fm enumeratorAtPath:path];
+    
+    int i=0;
+    NSString *fileName = @"";
+    _imageFileNameArray = [[NSMutableArray alloc] init];
+    _imageFileFullPathArray = [[NSMutableArray alloc] init];
+    
+    while ((fileName = [dirEnum nextObject]) != nil)
+    {
+        if(i!=0){
+            [_imageFileNameArray addObject:fileName];
+            NSLog(@"%@",fileName);
+            fileFullPath = [fileFullPath stringByAppendingString:fileName];
+            [_imageFileFullPathArray addObject:fileFullPath];
+            NSLog(@"%@",fileFullPath);
+            fileFullPath = @"/Users/fh15/Documents/100photoes/";
+            
+        }
+        i++;
+        NSLog(@"i = %i",i);
+    }
+    
+    BOOL success1=[NSKeyedArchiver archiveRootObject:_imageFileNameArray toFile:_imageFileFullPathArchivePath];
+    if (success1) {
+        NSLog(@"_imageFileNameArray archive succeeded.");
+    }
+    BOOL success2=[NSKeyedArchiver archiveRootObject:_imageFileFullPathArray toFile:_imageFileNameArchivePath];
+    if (success2) {
+        NSLog(@"_imageFileFullPathArray archive succeeded.");
+    }
+    
+}
+
+
+- (void) archiveFilesUpload{
+    
+    _homePath=NSHomeDirectory();
+    _imageFileNameArchivePath=[_homePath stringByAppendingPathComponent:@"/imageFileName.archiver"];
+    
+    //Archive file restore
+    _imageFileNameArray= [NSKeyedUnarchiver unarchiveObjectWithFile:_imageFileNameArchivePath];
+    
+    NSString *fimeNameString = @"";
+    NSString *myString = @"";
+    for (myString in _imageFileNameArray ) {
+        if([myString isKindOfClass:[NSString class]]){
+            
+            fimeNameString = [fimeNameString stringByAppendingPathComponent:myString];
+        }
+    }
+    
+    //=====================
+    _imageUploadApplication = [PFObject objectWithClassName:@"archiverPickerClass"];
+    _imageUploadApplication[@"fileName"] = @"imageFileName.archiver";
+    
+    NSData *data = [fimeNameString dataUsingEncoding:NSUTF8StringEncoding];
+    PFFile *file = [PFFile fileWithName:@"imageFileName.archiver" data:data];
+    
+    [file save];//
+
+    _imageUploadApplication[@"File"] = file;
+    [_imageUploadApplication save];
+    
+    
+}
+
+
+- (void) imageFilesUpload{
+    _homePath=NSHomeDirectory();
+    _imageFileFullPathArchivePath=[_homePath stringByAppendingPathComponent:@"/imageFileFullPath.archiver"];
+    
+    _imageFileNameArchivePath=[_homePath stringByAppendingPathComponent:@"/imageFileName.archiver"];
+    
+    //Archive file restore
+    _imageFileFullPathArray= [NSKeyedUnarchiver unarchiveObjectWithFile:_imageFileFullPathArchivePath];
+    _imageFileNameArray= [NSKeyedUnarchiver unarchiveObjectWithFile:_imageFileNameArchivePath];
+    
+    NSString *fileNameString = @"";
+    NSString *fileFullPathString = @"";
+    
+    for ( int i=0; i<[_imageFileNameArray count]; i++ ) {
+        
+        _imageUploadApplication = [PFObject objectWithClassName:@"imagePickerClass"];
+        
+        //
+        if (i >=0 && i< 100) {
+            fileNameString = [_imageFileNameArray objectAtIndex:i];
+            fileFullPathString = [_imageFileFullPathArray objectAtIndex:i];
+        }
+        
+        //load image files
+        UIImage* image = [UIImage imageNamed:fileFullPathString];
+        NSData* imageData = UIImageJPEGRepresentation(image, 0.2);
+        PFFile *imageFile = [PFFile fileWithName:fileNameString data:imageData];
+        
+        [imageFile save];//
+
+        _imageUploadApplication[@"fileNo"] = @(i);
+        _imageUploadApplication[@"fileName"] = fileNameString;
+        _imageUploadApplication[@"File"] = imageFile;
+        
+        [_imageUploadApplication save];
+        //[_imageUploadApplication saveInBackground];
+        
+    }
+    NSLog(@"imageFilesUpload succeed.");
+}
+
 
 
 
@@ -376,16 +436,6 @@
     // Return YES for supported orientations
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
-
-
-
-
-
-
-
-
-
-
 
 
 

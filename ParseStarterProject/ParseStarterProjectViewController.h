@@ -20,6 +20,9 @@
 @property (nonatomic, strong) NSMutableArray *imageFileNameArray;
 @property (weak, nonatomic) IBOutlet UITableView *photoTableView;
 
+@property (weak, nonatomic) IBOutlet UIImageView *imageView;
+
+
 
 @property (nonatomic, strong) NSArray *imageFileNamesResultArray;
 
@@ -38,52 +41,13 @@
 
 
 
-@property int iStart;
-@property int iEnd;
-@property int iClickCount;
-
-@property int iStoredIndex;
-
 @property int iIndexPathRow;
+@property int iImageNum;
 
 
-- (void) filesProcess;
-- (void) archiveFilesUpload;
-- (void) imageFilesUpload;
-
+ 
 - (void) nameFileRetrieve;
 - (void) imageFileRetrieve:(int) iNum;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

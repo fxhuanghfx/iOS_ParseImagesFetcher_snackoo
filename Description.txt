@@ -1,0 +1,1 @@
+After uploaded 100 pictures to Parse.com, the iOS app can download these picture from Parse.com and show them to users in a iPhone.

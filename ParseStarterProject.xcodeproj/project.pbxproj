@@ -30,8 +30,8 @@
 		81DDFD1919B4A60300BE649C /* Parse.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 81DDFD1719B4A60300BE649C /* Parse.framework */; };
 		847209C31BF169B500A66483 /* ImageFetcher.m in Sources */ = {isa = PBXBuildFile; fileRef = 847209C21BF169B500A66483 /* ImageFetcher.m */; };
 		847209CD1BF552BC00A66483 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 847209CC1BF552BC00A66483 /* Main.storyboard */; };
-		847209D21BF5856800A66483 /* PhotoCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 847209D11BF5856800A66483 /* PhotoCell.m */; };
 		84A5364A1BFAB1DB0070819B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 84A536491BFAB1DB0070819B /* Assets.xcassets */; };
+		84AF86C01C0E424D00B2E5C8 /* ImageTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 84AF86BF1C0E424D00B2E5C8 /* ImageTableViewCell.m */; };
 		DD952FCB16E7F5CF00470144 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 97E18B1E1624CB5700B17A67 /* CoreLocation.framework */; };
 /* End PBXBuildFile section */
 
@@ -67,9 +67,9 @@
 		847209C11BF169B500A66483 /* ImageFetcher.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImageFetcher.h; sourceTree = "<group>"; };
 		847209C21BF169B500A66483 /* ImageFetcher.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ImageFetcher.m; sourceTree = "<group>"; };
 		847209CC1BF552BC00A66483 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
-		847209D01BF5856800A66483 /* PhotoCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PhotoCell.h; sourceTree = "<group>"; };
-		847209D11BF5856800A66483 /* PhotoCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PhotoCell.m; sourceTree = "<group>"; };
 		84A536491BFAB1DB0070819B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Assets.xcassets; path = ../Assets.xcassets; sourceTree = "<group>"; };
+		84AF86BE1C0E424D00B2E5C8 /* ImageTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImageTableViewCell.h; sourceTree = "<group>"; };
+		84AF86BF1C0E424D00B2E5C8 /* ImageTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ImageTableViewCell.m; sourceTree = "<group>"; };
 		97E18B1E1624CB5700B17A67 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
@@ -136,11 +136,11 @@
 				09ABC08713A1D52E009C3FCF /* ParseStarterProjectViewController.m */,
 				847209C11BF169B500A66483 /* ImageFetcher.h */,
 				847209C21BF169B500A66483 /* ImageFetcher.m */,
+				84AF86BE1C0E424D00B2E5C8 /* ImageTableViewCell.h */,
+				84AF86BF1C0E424D00B2E5C8 /* ImageTableViewCell.m */,
 				847209CC1BF552BC00A66483 /* Main.storyboard */,
 				84A536491BFAB1DB0070819B /* Assets.xcassets */,
 				09ABC07813A1D52D009C3FCF /* Other Sources */,
-				847209D01BF5856800A66483 /* PhotoCell.h */,
-				847209D11BF5856800A66483 /* PhotoCell.m */,
 			);
 			path = ParseStarterProject;
 			sourceTree = "<group>";
@@ -273,7 +273,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				09ABC07F13A1D52D009C3FCF /* main.m in Sources */,
-				847209D21BF5856800A66483 /* PhotoCell.m in Sources */,
+				84AF86C01C0E424D00B2E5C8 /* ImageTableViewCell.m in Sources */,
 				847209C31BF169B500A66483 /* ImageFetcher.m in Sources */,
 				09ABC08213A1D52D009C3FCF /* ParseStarterProjectAppDelegate.m in Sources */,
 				09ABC08813A1D52E009C3FCF /* ParseStarterProjectViewController.m in Sources */,
@@ -323,6 +323,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
@@ -342,6 +343,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				COPY_PHASE_STRIP = YES;

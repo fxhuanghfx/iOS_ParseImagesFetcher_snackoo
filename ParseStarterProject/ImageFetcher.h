@@ -16,11 +16,11 @@
 + (ImageFetcher*)getSharedInstance;
  
 
-- (void) storeImageWithImage:(UIImage *) imageFile
+- (void) storeImageInRAM:(UIImage *) imageFile
           storeImageWithName:(NSString*)fileName;
 
 
-- (UIImage*) getImageForName:(NSString*)fileName;
+- (UIImage*) getImageFromRAM:(NSString*)fileName;
 
 
 @end

@@ -27,25 +27,12 @@
 #pragma mark UIApplicationDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-    // Enable storing and querying data from Local Datastore. Remove this line if you don't want to
-    // use Local Datastore features or want to use cachePolicy.
+    
     [Parse enableLocalDatastore];
 
-    // ****************************************************************************
-    // Uncomment this line if you want to enable Crash Reporting
-    // [ParseCrashReporting enable];
-    //
-    // Uncomment and fill in with your Parse credentials:
-    // [Parse setApplicationId:@"your_application_id" clientKey:@"your_client_key"];
-    //
     [Parse setApplicationId:@"ExnBosiEBMS5934wE40HaSeR8LdoFwtxEGOYmZ5Z"
                   clientKey:@"c8vShGy92lZD7OJi0g8JMY4FyZV9vAPAuQNRxPnu"];
     
-    // If you are using Facebook, uncomment and add your FacebookAppID to your bundle's plist as
-    // described here: https://developers.facebook.com/docs/getting-started/facebook-sdk-for-ios/
-    // [PFFacebookUtils initializeFacebook];
-    // ****************************************************************************
-
     [PFUser enableAutomaticUser];
 
     PFACL *defaultACL = [PFACL ACL];
@@ -55,17 +42,11 @@
 
     [PFACL setDefaultACL:defaultACL withAccessForCurrentUser:YES];
 
-    // Override point for customization after application launch.
-//    UIStoryboard * storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:[NSBundle mainBundle]];
-//    UIViewController * vc = [storyboard instantiateInitialViewController];
-//    
-//    self.window.rootViewController = vc;
-//    [self.window makeKeyAndVisible];
-
     if (application.applicationState != UIApplicationStateBackground) {
         // Track an app open here if we launch with a push, unless
         // "content_available" was used to trigger a background push (introduced in iOS 7).
         // In that case, we skip tracking here to avoid double counting the app-open.
+        
         BOOL preBackgroundPush = ![application respondsToSelector:@selector(backgroundRefreshStatus)];
         BOOL oldPushHandlerOnly = ![self respondsToSelector:@selector(application:didReceiveRemoteNotification:fetchCompletionHandler:)];
         BOOL noPushPayload = ![launchOptions objectForKey:UIApplicationLaunchOptionsRemoteNotificationKey];

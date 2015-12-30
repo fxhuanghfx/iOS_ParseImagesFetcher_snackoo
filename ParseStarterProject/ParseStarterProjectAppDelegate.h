@@ -10,7 +10,7 @@
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 #import <CoreData/CoreData.h>
-//#import <Parse/Parse.h>
+
 
 @class ParseStarterProjectViewController;
 
@@ -23,11 +23,9 @@
 
 //
 @property (nonatomic, strong) UIWindow *window;
-//@property (nonatomic, strong) IBOutlet ParseStarterProjectViewController *viewController;
 
 
 
 - (void) saveContext;
-//- (NSURL *) applocationDocumentsDirectory;
 
 @end

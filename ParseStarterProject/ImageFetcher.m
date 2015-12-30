@@ -17,14 +17,13 @@
     static ImageFetcher * sharedInstance = NULL;
     dispatch_once(&once, ^{
         sharedInstance = [[ImageFetcher alloc]init];
-        sharedInstance->cache = [NSMutableDictionary dictionaryWithCapacity:100];
-        //sharedInstance->cache = [[NSMutableDictionary alloc]init];
+        sharedInstance->cache = [[NSMutableDictionary alloc]init];
     });
     return sharedInstance;
 }
 
 
-- (void) storeImageWithImage:(UIImage *) imageFile
+- (void) storeImageInRAM:(UIImage *) imageFile
           storeImageWithName:(NSString*)fileName{
     
     if([cache objectForKey:fileName] == nil){
@@ -40,7 +39,7 @@
 
 
 
-- (UIImage*) getImageForName:(NSString*)fileName
+- (UIImage*) getImageFromRAM:(NSString*)fileName
 {
     
     if([cache objectForKey:fileName]!= nil){
